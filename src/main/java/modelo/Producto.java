@@ -12,7 +12,7 @@ public class Producto {
 
     private String nombre;
     private double precio;
-    private String imagen; // Nombre del archivo
+    private String imagen; 
 
     public Producto(String nombre, double precio, String imagen) {
         this.nombre = nombre;

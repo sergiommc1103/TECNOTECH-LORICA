@@ -14,14 +14,15 @@ public class AlmacenDatos {
     public static ListaProductosDoble productos = new ListaProductosDoble();
 
     public static void inicializar() {
-        // 1. Crear Usuarios
+        //Usuarios
         usuarios.agregar(new Usuario("admin", "123", "Admin"));
         usuarios.agregar(new Usuario("cliente", "0000", "Cliente"));
 
-        // 2. Crear Productos
-        productos.agregar(new Producto("Laptop", 1500, "laptop.png"));
-        productos.agregar(new Producto("Mouse", 20, "mouse.png"));
-        productos.agregar(new Producto("Teclado", 50, "teclado.png"));
+        //Crear Productos
+        productos.agregar(new Producto("iPhone 15 Pro Max", 5200000, "p1.png"));
+        productos.agregar(new Producto("Samsung S24 Ultra", 4800000, "p2.png"));
+        productos.agregar(new Producto("Xiaomi Note 13", 890000, "p3.png"));
+        productos.agregar(new Producto("ZTE Blade A54", 420000, "p4.png"));
 
         System.out.println("--> Datos cargados en Estructuras Manuales.");
     }

@@ -12,12 +12,16 @@ public class ListaProductosDoble {
 
     private NodoProducto cabeza;
     private NodoProducto cola;
-    private NodoProducto actual; // Puntero para saber qué producto estamos viendo
+    private NodoProducto actual;
 
     public ListaProductosDoble() {
         this.cabeza = null;
         this.cola = null;
         this.actual = null;
+    }
+
+    public NodoProducto getCabeza() {
+        return cabeza;
     }
 
     // Agregar al final
@@ -26,7 +30,7 @@ public class ListaProductosDoble {
         if (cabeza == null) {
             cabeza = nuevo;
             cola = nuevo;
-            actual = nuevo; // Inicializamos el puntero actual
+            actual = nuevo;
         } else {
             cola.sig = nuevo;
             nuevo.ante = cola;
@@ -34,7 +38,6 @@ public class ListaProductosDoble {
         }
     }
 
-    // Navegación
     public Producto obtenerActual() {
         return (actual != null) ? actual.dato : null;
     }

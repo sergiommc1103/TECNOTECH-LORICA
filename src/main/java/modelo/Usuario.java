@@ -12,7 +12,7 @@ public class Usuario {
 
     private String username;
     private String password;
-    private String rol; // en este caso es para cliente o admin
+    private String rol; 
 
     public Usuario(String username, String password, String rol) {
         this.username = username;
