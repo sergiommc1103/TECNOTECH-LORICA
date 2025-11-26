@@ -28,15 +28,29 @@ public class TiendaControlador {
 
     @FXML
     public void initialize() {
-        // Al iniciar, mostramos por defecto los Celulares
+
         filtrarPorCategoria("Celulares");
     }
 
-    // --- MÉTODOS PARA LOS CLICS DEL MENÚ (Cargan cada categoría) ---
-    @FXML private void verComputadores() { filtrarPorCategoria("Computadores"); }
-    @FXML private void verCelulares() { filtrarPorCategoria("Celulares"); }
-    @FXML private void verAccesorios() { filtrarPorCategoria("Accesorios"); }
-    @FXML private void verTodo() { filtrarPorCategoria("Todo"); }
+    @FXML
+    private void verComputadores() {
+        filtrarPorCategoria("Computadores");
+    }
+
+    @FXML
+    private void verCelulares() {
+        filtrarPorCategoria("Celulares");
+    }
+
+    @FXML
+    private void verAccesorios() {
+        filtrarPorCategoria("Accesorios");
+    }
+
+    @FXML
+    private void verTodo() {
+        filtrarPorCategoria("Todo");
+    }
 
     // --- LÓGICA PRINCIPAL DE FILTRADO ---
     private void filtrarPorCategoria(String categoriaDeseada) {
@@ -53,7 +67,7 @@ public class TiendaControlador {
 
             // CONDICIÓN: Solo mostramos si coincide la categoría (o si pedimos "Todo")
             if (categoriaDeseada.equals("Todo") || p.getCategoria().equals(categoriaDeseada)) {
-                
+
                 VBox tarjeta = crearTarjetaProducto(p);
 
                 gridProductos.add(tarjeta, columna, fila);
@@ -65,7 +79,6 @@ public class TiendaControlador {
                 }
             }
 
-            // MANTENEMOS TU VARIABLE "sig" TAL COMO PEDISTE
             actual = actual.sig;
         }
     }
