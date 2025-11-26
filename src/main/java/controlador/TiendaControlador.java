@@ -87,7 +87,7 @@ public class TiendaControlador {
         card.setAlignment(Pos.CENTER);
         card.setSpacing(10);
 
-        // 1. Imagen
+        //Imagen
         ImageView img = new ImageView();
         try {
             String ruta = "/com/tiendavirtual/" + p.getImagen();
@@ -99,18 +99,18 @@ public class TiendaControlador {
         img.setFitWidth(200);
         img.setPreserveRatio(true);
 
-        // 2. Nombre
+        //Nombre
         Label lblNombre = new Label(p.getNombre());
         lblNombre.getStyleClass().add("nombre-producto");
         lblNombre.setWrapText(true);
 
-        // 3. Precio
+        //Precio
         DecimalFormat formato = new DecimalFormat("#,###");
         String precioBonito = formato.format(p.getPrecio()).replace(",", ".");
         Label lblPrecio = new Label("$ " + precioBonito);
         lblPrecio.getStyleClass().add("precio-producto");
 
-        // 4. Botón
+        //Botón
         Button btnAgregar = new Button("Agregar al carrito");
         btnAgregar.getStyleClass().add("boton-carrito");
         btnAgregar.setMaxWidth(Double.MAX_VALUE);
