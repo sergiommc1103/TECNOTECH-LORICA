@@ -10,13 +10,12 @@ package modelo;
  */
 public class ListaUsuarios {
 
-    private NodoUsuario cab; 
+    private NodoUsuario cab;
 
     public ListaUsuarios() {
         this.cab = null;
     }
 
- 
     public void agregar(Usuario u) {
         NodoUsuario nuevo = new NodoUsuario(u);
         if (cab == null) {
@@ -27,17 +26,16 @@ public class ListaUsuarios {
         }
     }
 
-//buscar el usuario
     public Usuario buscar(String user, String pass) {
         NodoUsuario actual = cab;
         while (actual != null) {
             if (actual.dato.getUsername().equals(user)
                     && actual.dato.getPassword().equals(pass)) {
-                return actual.dato; 
+                return actual.dato;
             }
             actual = actual.sig;
         }
-        return null; 
+        return null;
     }
 
 }

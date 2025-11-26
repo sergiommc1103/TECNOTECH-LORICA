@@ -52,7 +52,6 @@ public class TiendaControlador {
         filtrarPorCategoria("Todo");
     }
 
-    // --- LÓGICA PRINCIPAL DE FILTRADO ---
     private void filtrarPorCategoria(String categoriaDeseada) {
         // 1. Limpiamos la pantalla antes de agregar los nuevos productos
         gridProductos.getChildren().clear();
@@ -65,7 +64,6 @@ public class TiendaControlador {
         while (actual != null) {
             Producto p = actual.dato;
 
-            // CONDICIÓN: Solo mostramos si coincide la categoría (o si pedimos "Todo")
             if (categoriaDeseada.equals("Todo") || p.getCategoria().equals(categoriaDeseada)) {
 
                 VBox tarjeta = crearTarjetaProducto(p);
