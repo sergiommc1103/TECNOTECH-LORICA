@@ -28,10 +28,21 @@ public class TiendaControlador {
 
     @FXML
     public void initialize() {
-        cargarProductos();
+        // Al iniciar, mostramos por defecto los Celulares
+        filtrarPorCategoria("Celulares");
     }
 
-    private void cargarProductos() {
+    // --- MÉTODOS PARA LOS CLICS DEL MENÚ (Cargan cada categoría) ---
+    @FXML private void verComputadores() { filtrarPorCategoria("Computadores"); }
+    @FXML private void verCelulares() { filtrarPorCategoria("Celulares"); }
+    @FXML private void verAccesorios() { filtrarPorCategoria("Accesorios"); }
+    @FXML private void verTodo() { filtrarPorCategoria("Todo"); }
+
+    // --- LÓGICA PRINCIPAL DE FILTRADO ---
+    private void filtrarPorCategoria(String categoriaDeseada) {
+        // 1. Limpiamos la pantalla antes de agregar los nuevos productos
+        gridProductos.getChildren().clear();
+
         int columna = 0;
         int fila = 0;
 
@@ -40,16 +51,21 @@ public class TiendaControlador {
         while (actual != null) {
             Producto p = actual.dato;
 
-            VBox tarjeta = crearTarjetaProducto(p);
+            // CONDICIÓN: Solo mostramos si coincide la categoría (o si pedimos "Todo")
+            if (categoriaDeseada.equals("Todo") || p.getCategoria().equals(categoriaDeseada)) {
+                
+                VBox tarjeta = crearTarjetaProducto(p);
 
-            gridProductos.add(tarjeta, columna, fila);
+                gridProductos.add(tarjeta, columna, fila);
 
-            columna++;
-            if (columna == 4) {
-                columna = 0;
-                fila++;
+                columna++;
+                if (columna == 4) {
+                    columna = 0;
+                    fila++;
+                }
             }
 
+            // MANTENEMOS TU VARIABLE "sig" TAL COMO PEDISTE
             actual = actual.sig;
         }
     }
@@ -63,7 +79,6 @@ public class TiendaControlador {
         // 1. Imagen
         ImageView img = new ImageView();
         try {
-
             String ruta = "/com/tiendavirtual/" + p.getImagen();
             img.setImage(new Image(getClass().getResourceAsStream(ruta)));
         } catch (Exception e) {
@@ -78,14 +93,13 @@ public class TiendaControlador {
         lblNombre.getStyleClass().add("nombre-producto");
         lblNombre.setWrapText(true);
 
+        // 3. Precio
         DecimalFormat formato = new DecimalFormat("#,###");
-
         String precioBonito = formato.format(p.getPrecio()).replace(",", ".");
-
         Label lblPrecio = new Label("$ " + precioBonito);
-
         lblPrecio.getStyleClass().add("precio-producto");
 
+        // 4. Botón
         Button btnAgregar = new Button("Agregar al carrito");
         btnAgregar.getStyleClass().add("boton-carrito");
         btnAgregar.setMaxWidth(Double.MAX_VALUE);

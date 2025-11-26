@@ -12,12 +12,14 @@ public class Producto {
 
     private String nombre;
     private double precio;
-    private String imagen; 
+    private String imagen;
+    private String categoria;
 
-    public Producto(String nombre, double precio, String imagen) {
+    public Producto(String nombre, double precio, String imagen, String categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.categoria = categoria;
     }
 
     public String getNombre() {
@@ -32,4 +34,7 @@ public class Producto {
         return imagen;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
 }
