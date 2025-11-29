@@ -139,7 +139,7 @@ public class TiendaControlador {
         return card;
     }
     
-    // Método para cambiar el texto del botón de arriba
+
     private void actualizarContador() {
         if (btnCarrito != null) {
             int cantidad = AlmacenDatos.carrito.getTamano();

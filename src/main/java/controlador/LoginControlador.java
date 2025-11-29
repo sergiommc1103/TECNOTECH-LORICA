@@ -50,10 +50,7 @@ public class LoginControlador {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tiendavirtual/tienda.fxml"));
                 Parent root = loader.load();
 
-                // --- ESTANDARIZADO A 1000 x 800 ---
-                // Al definirlo aquí, las siguientes ventanas (que usan setRoot)
-                // mantendrán este tamaño automáticamente.
-                Scene scene = new Scene(root, 1000, 800); 
+                Scene scene = new Scene(root, 1000, 800);
 
                 Stage stage = (Stage) txtUsuario.getScene().getWindow();
 
