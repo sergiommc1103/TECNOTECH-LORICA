@@ -4,20 +4,20 @@
  */
 package controlador;
 
-import java.io.IOException; // Importante para manejar errores de carga
+import java.io.IOException; 
 import java.text.DecimalFormat;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // Importante para cargar la nueva ventana
+import javafx.fxml.FXMLLoader; 
 import javafx.geometry.Pos;
-import javafx.scene.Parent; // Importante
-import javafx.scene.Scene; // Importante
+import javafx.scene.Parent; 
+import javafx.scene.Scene; 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage; // Importante
+import javafx.stage.Stage; 
 import modelo.AlmacenDatos;
 import modelo.Producto;
 import modelo.NodoProducto;
