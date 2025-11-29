@@ -4,15 +4,20 @@
  */
 package controlador;
 
-import java.text.DecimalFormat; // <--- AGREGADO: Para los puntos en el precio
+import java.io.IOException; // Importante para manejar errores de carga
+import java.text.DecimalFormat;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader; // Importante para cargar la nueva ventana
 import javafx.geometry.Pos;
+import javafx.scene.Parent; // Importante
+import javafx.scene.Scene; // Importante
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage; // Importante
 import modelo.AlmacenDatos;
 import modelo.Producto;
 import modelo.NodoProducto;
@@ -25,22 +30,44 @@ public class TiendaControlador {
 
     @FXML
     private GridPane gridProductos;
+    
+    @FXML
+    private Button btnCarrito; // Botón del menú superior
 
     @FXML
     public void initialize() {
-        // Al iniciar filtra por Celulares (o puedes poner "Todo")
+        // 1. Cargar productos iniciales
         filtrarPorCategoria("Celulares");
+        
+        // 2. Actualizar el número del carrito por si ya hay cosas
+        actualizarContador();
+
+        // 3. --- NUEVO: HACER QUE EL BOTÓN ABRA LA VENTANA DEL CARRITO ---
+        btnCarrito.setOnAction(e -> {
+            try {
+                // Cargar el archivo del carrito
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tiendavirtual/carrito.fxml"));
+                Parent root = loader.load();
+                
+                // Obtener la ventana actual y cambiar la escena
+                Stage stage = (Stage) btnCarrito.getScene().getWindow();
+                stage.setScene(new Scene(root, 1000, 800));
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("Error al abrir la ventana del carrito.");
+            }
+        });
+        // ---------------------------------------------------------------
     }
 
-    // --- AGREGADO: MÉTODOS PARA LOS BOTONES DEL MENÚ ---
     @FXML private void verComputadores() { filtrarPorCategoria("Computadores"); }
     @FXML private void verCelulares() { filtrarPorCategoria("Celulares"); }
     @FXML private void verAccesorios() { filtrarPorCategoria("Accesorios"); }
     @FXML private void verTodo() { filtrarPorCategoria("Todo"); }
 
-    // --- AGREGADO: LÓGICA DE FILTRADO ---
     private void filtrarPorCategoria(String categoriaDeseada) {
-        gridProductos.getChildren().clear(); // Limpia la pantalla
+        gridProductos.getChildren().clear();
 
         int columna = 0;
         int fila = 0;
@@ -50,10 +77,10 @@ public class TiendaControlador {
         while (actual != null) {
             Producto p = actual.dato;
 
-            // CONDICIÓN: Solo agrega si es la categoría correcta
             if (categoriaDeseada.equals("Todo") || p.getCategoria().equals(categoriaDeseada)) {
-                
+
                 VBox tarjeta = crearTarjetaProducto(p);
+
                 gridProductos.add(tarjeta, columna, fila);
 
                 columna++;
@@ -63,8 +90,7 @@ public class TiendaControlador {
                 }
             }
 
-            // RESPETANDO TU VARIABLE 'sig'
-            actual = actual.sig; 
+            actual = actual.sig; // Respetando tu variable
         }
     }
 
@@ -74,7 +100,7 @@ public class TiendaControlador {
         card.setAlignment(Pos.CENTER);
         card.setSpacing(10);
 
-        // 1. Imagen
+        // Imagen
         ImageView img = new ImageView();
         try {
             String ruta = "/com/tiendavirtual/" + p.getImagen();
@@ -86,30 +112,38 @@ public class TiendaControlador {
         img.setFitWidth(200);
         img.setPreserveRatio(true);
 
-        // 2. Nombre
+        // Nombre
         Label lblNombre = new Label(p.getNombre());
         lblNombre.getStyleClass().add("nombre-producto");
         lblNombre.setWrapText(true);
 
-        // 3. Precio (AGREGADO: Formato con puntos)
+        // Precio
         DecimalFormat formato = new DecimalFormat("#,###");
         String precioBonito = formato.format(p.getPrecio()).replace(",", ".");
-        
         Label lblPrecio = new Label("$ " + precioBonito);
         lblPrecio.getStyleClass().add("precio-producto");
 
-        // 4. Botón
+        // Botón
         Button btnAgregar = new Button("Agregar al carrito");
         btnAgregar.getStyleClass().add("boton-carrito");
         btnAgregar.setMaxWidth(Double.MAX_VALUE);
-        
-        // Acción del botón (Opcional: para que guarde en la lista del carrito)
+
+        // Acción del botón de agregar (Suma y actualiza contador)
         btnAgregar.setOnAction(e -> {
             AlmacenDatos.carrito.agregar(p);
+            actualizarContador();
             System.out.println("Agregado: " + p.getNombre());
         });
 
         card.getChildren().addAll(img, lblNombre, lblPrecio, btnAgregar);
         return card;
+    }
+    
+    // Método para cambiar el texto del botón de arriba
+    private void actualizarContador() {
+        if (btnCarrito != null) {
+            int cantidad = AlmacenDatos.carrito.getTamano();
+            btnCarrito.setText("🛒 Carrito (" + cantidad + ")");
+        }
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="fondo-dark" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CarritoControlador">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20; -fx-border-color: #333; -fx-border-width: 0 0 1 0;">
+            <Button onAction="#volverTienda" styleClass="boton-switch-inactivo" text="⬅ Volver a la Tienda" />
+            <Label styleClass="titulo-seccion" text="Tu Carrito de Compras" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox fx:id="listaItems" spacing="15">
+                <padding><Insets bottom="20" left="50" right="50" top="20" /></padding>
+                </VBox>
+        </ScrollPane>
+    </center>
+
+    <right>
+        <VBox spacing="20" style="-fx-background-color: #1a1b1e; -fx-padding: 30; -fx-pref-width: 300;">
+            <Label styleClass="titulo-seccion" text="Resumen" />
+            
+            <HBox>
+                <Label styleClass="texto-gris" text="Total a Pagar:" />
+                <Region HBox.hgrow="ALWAYS" />
+            </HBox>
+            
+            <Label fx:id="lblTotal" text="\$ 0" textFill="#00b4d8">
+                <font><Font name="System Bold" size="32.0" /></font>
+            </Label>
+
+            <Button maxWidth="Infinity" styleClass="boton-neon" text="Pagar Ahora" />
+            <Button maxWidth="Infinity" onAction="#vaciarCarrito" style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand;" text="Vaciar Carrito" />
+        </VBox>
+    </right>
+
+</BorderPane>
