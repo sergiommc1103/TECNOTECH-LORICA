@@ -12,13 +12,18 @@ public class AlmacenDatos {
 
     public static ListaUsuarios usuarios = new ListaUsuarios();
     public static ListaProductosDoble productos = new ListaProductosDoble();
+    
+    // --- NUEVO: AQUÍ AGREGAMOS LA LISTA DEL CARRITO ---
+    // Esto es necesario para que el controlador pueda guardar lo que compras
+    public static ListaCarrito carrito = new ListaCarrito();
+    // --------------------------------------------------
 
     public static void inicializar() {
         //Usuarios
         usuarios.agregar(new Usuario("admin", "123", "Admin"));
         usuarios.agregar(new Usuario("cliente", "0000", "Cliente"));
 
-        // CELULARES (CORREGIDO: Faltaba agregar "Celulares" al final)
+        // CELULARES
         productos.agregar(new Producto("iPhone 15 Pro Max", 5200000, "p1.png", "Celulares"));
         productos.agregar(new Producto("Samsung S24 Ultra", 4800000, "p2.png", "Celulares"));
         productos.agregar(new Producto("Xiaomi Note 13", 890000, "p3.png", "Celulares"));
