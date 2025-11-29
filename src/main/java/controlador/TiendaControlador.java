@@ -4,20 +4,19 @@
  */
 package controlador;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent; 
-import javafx.scene.Scene; 
+import javafx.scene.Parent;
+// Ya no necesitamos 'Scene' ni 'Stage' para cambiar la vista
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage; 
 import modelo.AlmacenDatos;
 import modelo.Producto;
 import modelo.NodoProducto;
@@ -39,26 +38,27 @@ public class TiendaControlador {
         // 1. Cargar productos iniciales
         filtrarPorCategoria("Celulares");
         
-        // 2. Actualizar el número del carrito por si ya hay cosas
+        // 2. Actualizar el número del carrito
         actualizarContador();
 
-        // 3. --- NUEVO: HACER QUE EL BOTÓN ABRA LA VENTANA DEL CARRITO ---
+        // 3. ACCIÓN CORREGIDA: IR AL CARRITO SIN CAMBIAR TAMAÑO
         btnCarrito.setOnAction(e -> {
             try {
                 // Cargar el archivo del carrito
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tiendavirtual/carrito.fxml"));
                 Parent root = loader.load();
                 
-                // Obtener la ventana actual y cambiar la escena
-                Stage stage = (Stage) btnCarrito.getScene().getWindow();
-                stage.setScene(new Scene(root, 1000, 800));
+                // --- EL CAMBIO CLAVE ESTÁ AQUÍ ---
+                // En lugar de crear una Scene nueva, cambiamos la raíz de la actual.
+                // Esto MANTIENE el tamaño y si está maximizada.
+                btnCarrito.getScene().setRoot(root);
+                // ---------------------------------
                 
             } catch (IOException ex) {
                 ex.printStackTrace();
                 System.out.println("Error al abrir la ventana del carrito.");
             }
         });
-        // ---------------------------------------------------------------
     }
 
     @FXML private void verComputadores() { filtrarPorCategoria("Computadores"); }
@@ -128,7 +128,7 @@ public class TiendaControlador {
         btnAgregar.getStyleClass().add("boton-carrito");
         btnAgregar.setMaxWidth(Double.MAX_VALUE);
 
-        // Acción del botón de agregar (Suma y actualiza contador)
+        // Acción del botón de agregar
         btnAgregar.setOnAction(e -> {
             AlmacenDatos.carrito.agregar(p);
             actualizarContador();
