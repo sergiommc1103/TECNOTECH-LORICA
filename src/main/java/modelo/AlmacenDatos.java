@@ -12,11 +12,11 @@ public class AlmacenDatos {
 
     public static ListaUsuarios usuarios = new ListaUsuarios();
     public static ListaProductosDoble productos = new ListaProductosDoble();
-
     public static ListaCarrito carrito = new ListaCarrito();
-
+    public static ListaFavoritos favoritos = new ListaFavoritos();
+    
     public static void inicializar() {
-        //Usuarios
+        // Usuarios
         usuarios.agregar(new Usuario("admin", "123", "Admin"));
         usuarios.agregar(new Usuario("cliente", "0000", "Cliente"));
 
@@ -26,12 +26,12 @@ public class AlmacenDatos {
         productos.agregar(new Producto("Xiaomi Note 13", 890000, "p3.png", "Celulares"));
         productos.agregar(new Producto("ZTE Blade A54", 420000, "p4.png", "Celulares"));
 
-        // 2. COMPUTADORES
+        //COMPUTADORES
         productos.agregar(new Producto("Laptop Asus TUF", 4500000, "pc1.png", "Computadores"));
         productos.agregar(new Producto("MacBook Air M2", 5800000, "pc2.png", "Computadores"));
         productos.agregar(new Producto("HP Pavilion", 2300000, "pc3.png", "Computadores"));
 
-        // 3. ACCESORIOS
+        //ACCESORIOS
         productos.agregar(new Producto("Audífonos Sony", 350000, "acc1.png", "Accesorios"));
 
         System.out.println("--> Datos cargados en Estructuras Manuales.");

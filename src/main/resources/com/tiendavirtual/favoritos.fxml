@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="fondo-dark" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.FavoritosControlador">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20; -fx-border-color: #333; -fx-border-width: 0 0 1 0;">
+            <Button onAction="#volverTienda" styleClass="boton-switch-inactivo" text="⬅ Volver a la Tienda" />
+            <Label styleClass="titulo-seccion" text="❤️ Mis Favoritos" />
+            
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <Button onAction="#vaciarFavoritos" style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 5;" text="Vaciar Lista" />
+            </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox alignment="TOP_CENTER" spacing="20">
+                <padding><Insets bottom="30" left="50" right="50" top="30" /></padding>
+                
+                <GridPane fx:id="gridFavoritos" alignment="CENTER" hgap="20" vgap="20">
+                </GridPane>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

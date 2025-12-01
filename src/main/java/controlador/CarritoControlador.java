@@ -4,13 +4,17 @@
  */
 package controlador;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-// Ya no necesitamos 'Scene' ni 'Stage' aquí
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import modelo.AlmacenDatos;
 import modelo.NodoCarrito;
 import modelo.Producto;
@@ -76,7 +81,8 @@ public class CarritoControlador {
         ImageView img = new ImageView();
         try {
             img.setImage(new Image(getClass().getResourceAsStream("/com/tiendavirtual/" + p.getImagen())));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         img.setFitHeight(60);
         img.setFitWidth(60);
         img.setPreserveRatio(true);
@@ -101,11 +107,7 @@ public class CarritoControlador {
 
     @FXML
     private void volverTienda() throws IOException {
-        // Cargar nuevamente la tienda
         Parent root = FXMLLoader.load(getClass().getResource("/com/tiendavirtual/tienda.fxml"));
-        
-        // --- CAMBIO CLAVE: USAR setRoot ---
-        // Esto mantiene el tamaño de la ventana intacto al volver
         listaItems.getScene().setRoot(root);
     }
 
@@ -113,5 +115,70 @@ public class CarritoControlador {
     private void vaciarCarrito() {
         AlmacenDatos.carrito = new ListaCarrito();
         cargarCarrito();
+    }
+
+    //MÉTODO PARA GENERAR FACTURA TXT
+    @FXML
+    private void pagarAhora() {
+
+        if (AlmacenDatos.carrito.getTamano() == 0) {
+            mostrarAlerta("Carrito Vacío", "Agrega productos antes de pagar.");
+            return;
+        }
+
+        try {
+
+            String fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+            String nombreArchivo = "Factura_" + fecha + ".txt";
+
+            FileWriter archivo = new FileWriter(nombreArchivo);
+            PrintWriter escritor = new PrintWriter(archivo);
+
+            escritor.println("=========================================");
+            escritor.println("          TECNOTECH LORICA");
+            escritor.println("         Factura de Venta");
+            escritor.println("=========================================");
+            escritor.println("Fecha: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+            escritor.println("-----------------------------------------");
+            escritor.println(String.format("%-30s %15s", "PRODUCTO", "PRECIO"));
+            escritor.println("-----------------------------------------");
+
+            NodoCarrito actual = AlmacenDatos.carrito.getCabeza();
+            double total = 0;
+            DecimalFormat fmt = new DecimalFormat("#,###");
+
+            while (actual != null) {
+                Producto p = actual.producto;
+
+                escritor.println(String.format("%-30s $ %s",
+                        p.getNombre().length() > 28 ? p.getNombre().substring(0, 28) : p.getNombre(),
+                        fmt.format(p.getPrecio()).replace(",", ".")));
+
+                total += p.getPrecio();
+                actual = actual.siguiente;
+            }
+
+            escritor.println("-----------------------------------------");
+            escritor.println("TOTAL A PAGAR:               $ " + fmt.format(total).replace(",", "."));
+            escritor.println("=========================================");
+            escritor.println("      ¡Gracias por tu compra!");
+
+            escritor.close();
+
+            vaciarCarrito();
+            mostrarAlerta("Compra Exitosa", "Se ha generado la factura: " + nombreArchivo);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo generar la factura.");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

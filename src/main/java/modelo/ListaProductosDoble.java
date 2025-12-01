@@ -24,7 +24,6 @@ public class ListaProductosDoble {
         return cabeza;
     }
 
-    // Agregar al final
     public void agregar(Producto p) {
         NodoProducto nuevo = new NodoProducto(p);
         if (cabeza == null) {
@@ -55,4 +54,3 @@ public class ListaProductosDoble {
     }
 
 }
-//FIN

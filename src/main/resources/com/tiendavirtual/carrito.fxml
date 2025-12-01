@@ -22,8 +22,10 @@
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
             <VBox fx:id="listaItems" spacing="15">
-                <padding><Insets bottom="20" left="50" right="50" top="20" /></padding>
-                </VBox>
+                <padding>
+                    <Insets bottom="20" left="50" right="50" top="20" />
+                </padding>
+            </VBox>
         </ScrollPane>
     </center>
 
@@ -37,10 +39,12 @@
             </HBox>
             
             <Label fx:id="lblTotal" text="\$ 0" textFill="#00b4d8">
-                <font><Font name="System Bold" size="32.0" /></font>
+                <font>
+                    <Font name="System Bold" size="32.0" />
+                </font>
             </Label>
 
-            <Button maxWidth="Infinity" styleClass="boton-neon" text="Pagar Ahora" />
+            <Button maxWidth="Infinity" styleClass="boton-neon" text="Pagar Ahora" onAction="#pagarAhora" />
             <Button maxWidth="Infinity" onAction="#vaciarCarrito" style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand;" text="Vaciar Carrito" />
         </VBox>
     </right>
