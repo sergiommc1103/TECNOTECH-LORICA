@@ -55,7 +55,7 @@ public class LoginControlador {
                 Stage stage = (Stage) txtUsuario.getScene().getWindow();
 
                 stage.setScene(scene);
-                stage.centerOnScreen(); // Centrar en la pantalla
+                stage.centerOnScreen();
                 stage.show();
 
             } catch (IOException e) {

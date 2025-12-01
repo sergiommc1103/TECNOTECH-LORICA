@@ -90,7 +90,7 @@ public class TiendaControlador {
                 }
             }
 
-            actual = actual.sig; // Respetando tu variable
+            actual = actual.sig;
         }
     }
 
